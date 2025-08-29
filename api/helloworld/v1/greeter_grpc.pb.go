@@ -1,4 +1,4 @@
-// Copyright 2025 fsyyft-go
+// Copyright 2025 fsyyft-ai
 //
 // Licensed under the MIT License. See LICENSE file in the project root for full license information.
 
@@ -16,6 +16,7 @@ package v1
 
 import (
 	context "context"
+
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"

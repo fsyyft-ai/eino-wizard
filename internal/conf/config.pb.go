@@ -1,4 +1,4 @@
-// Copyright 2025 fsyyft-go
+// Copyright 2025 fsyyft-ai
 //
 // Licensed under the MIT License. See LICENSE file in the project root for full license information.
 
@@ -15,12 +15,13 @@
 package conf
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	durationpb "google.golang.org/protobuf/types/known/durationpb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	durationpb "google.golang.org/protobuf/types/known/durationpb"
 )
 
 const (

@@ -1,4 +1,4 @@
-// Copyright 2025 fsyyft-go
+// Copyright 2025 fsyyft-ai
 //
 // Licensed under the MIT License. See LICENSE file in the project root for full license information.
 
@@ -15,13 +15,14 @@
 package v1
 
 import (
+	reflect "reflect"
+	sync "sync"
+	unsafe "unsafe"
+
 	_ "github.com/envoyproxy/protoc-gen-validate/validate"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	reflect "reflect"
-	sync "sync"
-	unsafe "unsafe"
 )
 
 const (
