@@ -21,7 +21,7 @@ jobs:
     strategy:
       matrix:
         # 定义测试矩阵，指定多个 Go 版本进行测试。
-        go-version: [ '1.22', '1.23', '1.24' ]
+        go-version: [ '1.22', '1.23', '1.24', '1.25' ]
       # 设置当某个版本测试失败时，其他版本继续执行。
       fail-fast: false
       # 限制并发执行数为 1，确保测试按顺序执行。
@@ -61,8 +61,8 @@ jobs:
       # 使用 actions/setup-go@v4 动作设置 Go 环境。
       uses: actions/setup-go@v4
       with:
-        # 指定使用 Go 1.24 版本。
-        go-version: '1.24'
+        # 指定使用 Go 1.25 版本。
+        go-version: '1.25'
         # 启用 Go 模块缓存以加速构建。
         cache: true
 
