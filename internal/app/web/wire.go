@@ -11,8 +11,8 @@ import (
 	"github.com/google/wire"
 
 	appbiz "github.com/fsyyft-ai/eino-wizard/internal/biz"
-	appconf "github.com/fsyyft-ai/eino-wizard/internal/conf"
 	appdata "github.com/fsyyft-ai/eino-wizard/internal/data"
+	appconf "github.com/fsyyft-ai/eino-wizard/internal/pkg/conf"
 	appserver "github.com/fsyyft-ai/eino-wizard/internal/server"
 	appservice "github.com/fsyyft-ai/eino-wizard/internal/service"
 )

@@ -9,7 +9,7 @@
 // versions:
 // 	protoc-gen-go v1.36.8
 // 	protoc        v6.32.0
-// source: internal/conf/config.proto
+// source: internal/pkg/conf/config.proto
 
 // 指定生成的 Go 代码的包路径和包名。
 
@@ -37,15 +37,17 @@ type Config struct {
 	// Log 配置应用程序的日志系统。
 	Log *Log `protobuf:"bytes,1,opt,name=log,proto3" json:"log,omitempty"`
 	// Server 配置应用程序的服务器设置。
-	Server        *Server `protobuf:"bytes,2,opt,name=server,proto3" json:"server,omitempty"`
-	Ai            *AI     `protobuf:"bytes,3,opt,name=ai,proto3" json:"ai,omitempty"`
+	Server        *Server     `protobuf:"bytes,2,opt,name=server,proto3" json:"server,omitempty"`
+	Network       *Network    `protobuf:"bytes,3,opt,name=network,proto3" json:"network,omitempty"`
+	Ai            *AI         `protobuf:"bytes,4,opt,name=ai,proto3" json:"ai,omitempty"`
+	QuickStart    *QuickStart `protobuf:"bytes,5,opt,name=quickStart,proto3" json:"quickStart,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Config) Reset() {
 	*x = Config{}
-	mi := &file_internal_conf_config_proto_msgTypes[0]
+	mi := &file_internal_pkg_conf_config_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -57,7 +59,7 @@ func (x *Config) String() string {
 func (*Config) ProtoMessage() {}
 
 func (x *Config) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_conf_config_proto_msgTypes[0]
+	mi := &file_internal_pkg_conf_config_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -70,7 +72,7 @@ func (x *Config) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Config.ProtoReflect.Descriptor instead.
 func (*Config) Descriptor() ([]byte, []int) {
-	return file_internal_conf_config_proto_rawDescGZIP(), []int{0}
+	return file_internal_pkg_conf_config_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *Config) GetLog() *Log {
@@ -87,9 +89,23 @@ func (x *Config) GetServer() *Server {
 	return nil
 }
 
+func (x *Config) GetNetwork() *Network {
+	if x != nil {
+		return x.Network
+	}
+	return nil
+}
+
 func (x *Config) GetAi() *AI {
 	if x != nil {
 		return x.Ai
+	}
+	return nil
+}
+
+func (x *Config) GetQuickStart() *QuickStart {
+	if x != nil {
+		return x.QuickStart
 	}
 	return nil
 }
@@ -109,7 +125,7 @@ type Log struct {
 
 func (x *Log) Reset() {
 	*x = Log{}
-	mi := &file_internal_conf_config_proto_msgTypes[1]
+	mi := &file_internal_pkg_conf_config_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -121,7 +137,7 @@ func (x *Log) String() string {
 func (*Log) ProtoMessage() {}
 
 func (x *Log) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_conf_config_proto_msgTypes[1]
+	mi := &file_internal_pkg_conf_config_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -134,7 +150,7 @@ func (x *Log) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Log.ProtoReflect.Descriptor instead.
 func (*Log) Descriptor() ([]byte, []int) {
-	return file_internal_conf_config_proto_rawDescGZIP(), []int{1}
+	return file_internal_pkg_conf_config_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *Log) GetType() string {
@@ -169,7 +185,7 @@ type Server struct {
 
 func (x *Server) Reset() {
 	*x = Server{}
-	mi := &file_internal_conf_config_proto_msgTypes[2]
+	mi := &file_internal_pkg_conf_config_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -181,7 +197,7 @@ func (x *Server) String() string {
 func (*Server) ProtoMessage() {}
 
 func (x *Server) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_conf_config_proto_msgTypes[2]
+	mi := &file_internal_pkg_conf_config_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -194,7 +210,7 @@ func (x *Server) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Server.ProtoReflect.Descriptor instead.
 func (*Server) Descriptor() ([]byte, []int) {
-	return file_internal_conf_config_proto_rawDescGZIP(), []int{2}
+	return file_internal_pkg_conf_config_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *Server) GetHttp() *Server_HTTP {
@@ -202,6 +218,58 @@ func (x *Server) GetHttp() *Server_HTTP {
 		return x.Http
 	}
 	return nil
+}
+
+type Network struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ProxyProtocol string                 `protobuf:"bytes,1,opt,name=proxyProtocol,proto3" json:"proxyProtocol,omitempty"`
+	ProxyAddress  string                 `protobuf:"bytes,2,opt,name=proxyAddress,proto3" json:"proxyAddress,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Network) Reset() {
+	*x = Network{}
+	mi := &file_internal_pkg_conf_config_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Network) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Network) ProtoMessage() {}
+
+func (x *Network) ProtoReflect() protoreflect.Message {
+	mi := &file_internal_pkg_conf_config_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Network.ProtoReflect.Descriptor instead.
+func (*Network) Descriptor() ([]byte, []int) {
+	return file_internal_pkg_conf_config_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *Network) GetProxyProtocol() string {
+	if x != nil {
+		return x.ProxyProtocol
+	}
+	return ""
+}
+
+func (x *Network) GetProxyAddress() string {
+	if x != nil {
+		return x.ProxyAddress
+	}
+	return ""
 }
 
 type AI struct {
@@ -215,7 +283,7 @@ type AI struct {
 
 func (x *AI) Reset() {
 	*x = AI{}
-	mi := &file_internal_conf_config_proto_msgTypes[3]
+	mi := &file_internal_pkg_conf_config_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -227,7 +295,7 @@ func (x *AI) String() string {
 func (*AI) ProtoMessage() {}
 
 func (x *AI) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_conf_config_proto_msgTypes[3]
+	mi := &file_internal_pkg_conf_config_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -240,7 +308,7 @@ func (x *AI) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AI.ProtoReflect.Descriptor instead.
 func (*AI) Descriptor() ([]byte, []int) {
-	return file_internal_conf_config_proto_rawDescGZIP(), []int{3}
+	return file_internal_pkg_conf_config_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *AI) GetOpenai() *OpenAI {
@@ -274,7 +342,7 @@ type OpenAI struct {
 
 func (x *OpenAI) Reset() {
 	*x = OpenAI{}
-	mi := &file_internal_conf_config_proto_msgTypes[4]
+	mi := &file_internal_pkg_conf_config_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -286,7 +354,7 @@ func (x *OpenAI) String() string {
 func (*OpenAI) ProtoMessage() {}
 
 func (x *OpenAI) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_conf_config_proto_msgTypes[4]
+	mi := &file_internal_pkg_conf_config_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -299,7 +367,7 @@ func (x *OpenAI) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OpenAI.ProtoReflect.Descriptor instead.
 func (*OpenAI) Descriptor() ([]byte, []int) {
-	return file_internal_conf_config_proto_rawDescGZIP(), []int{4}
+	return file_internal_pkg_conf_config_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *OpenAI) GetBaseUrl() string {
@@ -327,7 +395,7 @@ type Ollama struct {
 
 func (x *Ollama) Reset() {
 	*x = Ollama{}
-	mi := &file_internal_conf_config_proto_msgTypes[5]
+	mi := &file_internal_pkg_conf_config_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -339,7 +407,7 @@ func (x *Ollama) String() string {
 func (*Ollama) ProtoMessage() {}
 
 func (x *Ollama) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_conf_config_proto_msgTypes[5]
+	mi := &file_internal_pkg_conf_config_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -352,7 +420,7 @@ func (x *Ollama) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Ollama.ProtoReflect.Descriptor instead.
 func (*Ollama) Descriptor() ([]byte, []int) {
-	return file_internal_conf_config_proto_rawDescGZIP(), []int{5}
+	return file_internal_pkg_conf_config_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *Ollama) GetBaseUrl() string {
@@ -365,6 +433,50 @@ func (x *Ollama) GetBaseUrl() string {
 func (x *Ollama) GetModel() string {
 	if x != nil {
 		return x.Model
+	}
+	return ""
+}
+
+type QuickStart struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Command       string                 `protobuf:"bytes,1,opt,name=command,proto3" json:"command,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *QuickStart) Reset() {
+	*x = QuickStart{}
+	mi := &file_internal_pkg_conf_config_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *QuickStart) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QuickStart) ProtoMessage() {}
+
+func (x *QuickStart) ProtoReflect() protoreflect.Message {
+	mi := &file_internal_pkg_conf_config_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QuickStart.ProtoReflect.Descriptor instead.
+func (*QuickStart) Descriptor() ([]byte, []int) {
+	return file_internal_pkg_conf_config_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *QuickStart) GetCommand() string {
+	if x != nil {
+		return x.Command
 	}
 	return ""
 }
@@ -384,7 +496,7 @@ type Server_HTTP struct {
 
 func (x *Server_HTTP) Reset() {
 	*x = Server_HTTP{}
-	mi := &file_internal_conf_config_proto_msgTypes[6]
+	mi := &file_internal_pkg_conf_config_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -396,7 +508,7 @@ func (x *Server_HTTP) String() string {
 func (*Server_HTTP) ProtoMessage() {}
 
 func (x *Server_HTTP) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_conf_config_proto_msgTypes[6]
+	mi := &file_internal_pkg_conf_config_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -409,7 +521,7 @@ func (x *Server_HTTP) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Server_HTTP.ProtoReflect.Descriptor instead.
 func (*Server_HTTP) Descriptor() ([]byte, []int) {
-	return file_internal_conf_config_proto_rawDescGZIP(), []int{2, 0}
+	return file_internal_pkg_conf_config_proto_rawDescGZIP(), []int{2, 0}
 }
 
 func (x *Server_HTTP) GetNetwork() string {
@@ -433,15 +545,19 @@ func (x *Server_HTTP) GetTimeout() *durationpb.Duration {
 	return nil
 }
 
-var File_internal_conf_config_proto protoreflect.FileDescriptor
+var File_internal_pkg_conf_config_proto protoreflect.FileDescriptor
 
-const file_internal_conf_config_proto_rawDesc = "" +
+const file_internal_pkg_conf_config_proto_rawDesc = "" +
 	"\n" +
-	"\x1ainternal/conf/config.proto\x12\rinternal.conf\x1a\x1egoogle/protobuf/duration.proto\"\x80\x01\n" +
+	"\x1einternal/pkg/conf/config.proto\x12\rinternal.conf\x1a\x1egoogle/protobuf/duration.proto\"\xed\x01\n" +
 	"\x06Config\x12$\n" +
 	"\x03log\x18\x01 \x01(\v2\x12.internal.conf.LogR\x03log\x12-\n" +
-	"\x06server\x18\x02 \x01(\v2\x15.internal.conf.ServerR\x06server\x12!\n" +
-	"\x02ai\x18\x03 \x01(\v2\x11.internal.conf.AIR\x02ai\"G\n" +
+	"\x06server\x18\x02 \x01(\v2\x15.internal.conf.ServerR\x06server\x120\n" +
+	"\anetwork\x18\x03 \x01(\v2\x16.internal.conf.NetworkR\anetwork\x12!\n" +
+	"\x02ai\x18\x04 \x01(\v2\x11.internal.conf.AIR\x02ai\x129\n" +
+	"\n" +
+	"quickStart\x18\x05 \x01(\v2\x19.internal.conf.QuickStartR\n" +
+	"quickStart\"G\n" +
 	"\x03Log\x12\x12\n" +
 	"\x04type\x18\x01 \x01(\tR\x04type\x12\x16\n" +
 	"\x06output\x18\x02 \x01(\tR\x06output\x12\x14\n" +
@@ -451,7 +567,10 @@ const file_internal_conf_config_proto_rawDesc = "" +
 	"\x04HTTP\x12\x18\n" +
 	"\anetwork\x18\x01 \x01(\tR\anetwork\x12\x12\n" +
 	"\x04addr\x18\x02 \x01(\tR\x04addr\x123\n" +
-	"\atimeout\x18\x03 \x01(\v2\x19.google.protobuf.DurationR\atimeout\"\x80\x01\n" +
+	"\atimeout\x18\x03 \x01(\v2\x19.google.protobuf.DurationR\atimeout\"S\n" +
+	"\aNetwork\x12$\n" +
+	"\rproxyProtocol\x18\x01 \x01(\tR\rproxyProtocol\x12\"\n" +
+	"\fproxyAddress\x18\x02 \x01(\tR\fproxyAddress\"\x80\x01\n" +
 	"\x02AI\x12-\n" +
 	"\x06openai\x18\x01 \x01(\v2\x15.internal.conf.OpenAIR\x06openai\x12-\n" +
 	"\x06ollama\x18\x02 \x01(\v2\x15.internal.conf.OllamaR\x06ollama\x12\x1c\n" +
@@ -461,66 +580,73 @@ const file_internal_conf_config_proto_rawDesc = "" +
 	"\x06apiKey\x18\x02 \x01(\tR\x06apiKey\"8\n" +
 	"\x06Ollama\x12\x18\n" +
 	"\abaseUrl\x18\x01 \x01(\tR\abaseUrl\x12\x14\n" +
-	"\x05model\x18\x02 \x01(\tR\x05modelB5Z3github.com/fsyyft-ai/eino-wizard/internal/conf;confb\x06proto3"
+	"\x05model\x18\x02 \x01(\tR\x05model\"&\n" +
+	"\n" +
+	"QuickStart\x12\x18\n" +
+	"\acommand\x18\x01 \x01(\tR\acommandB9Z7github.com/fsyyft-ai/eino-wizard/internal/pkg/conf;confb\x06proto3"
 
 var (
-	file_internal_conf_config_proto_rawDescOnce sync.Once
-	file_internal_conf_config_proto_rawDescData []byte
+	file_internal_pkg_conf_config_proto_rawDescOnce sync.Once
+	file_internal_pkg_conf_config_proto_rawDescData []byte
 )
 
-func file_internal_conf_config_proto_rawDescGZIP() []byte {
-	file_internal_conf_config_proto_rawDescOnce.Do(func() {
-		file_internal_conf_config_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_internal_conf_config_proto_rawDesc), len(file_internal_conf_config_proto_rawDesc)))
+func file_internal_pkg_conf_config_proto_rawDescGZIP() []byte {
+	file_internal_pkg_conf_config_proto_rawDescOnce.Do(func() {
+		file_internal_pkg_conf_config_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_internal_pkg_conf_config_proto_rawDesc), len(file_internal_pkg_conf_config_proto_rawDesc)))
 	})
-	return file_internal_conf_config_proto_rawDescData
+	return file_internal_pkg_conf_config_proto_rawDescData
 }
 
-var file_internal_conf_config_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
-var file_internal_conf_config_proto_goTypes = []any{
+var file_internal_pkg_conf_config_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_internal_pkg_conf_config_proto_goTypes = []any{
 	(*Config)(nil),              // 0: internal.conf.Config
 	(*Log)(nil),                 // 1: internal.conf.Log
 	(*Server)(nil),              // 2: internal.conf.Server
-	(*AI)(nil),                  // 3: internal.conf.AI
-	(*OpenAI)(nil),              // 4: internal.conf.OpenAI
-	(*Ollama)(nil),              // 5: internal.conf.Ollama
-	(*Server_HTTP)(nil),         // 6: internal.conf.Server.HTTP
-	(*durationpb.Duration)(nil), // 7: google.protobuf.Duration
+	(*Network)(nil),             // 3: internal.conf.Network
+	(*AI)(nil),                  // 4: internal.conf.AI
+	(*OpenAI)(nil),              // 5: internal.conf.OpenAI
+	(*Ollama)(nil),              // 6: internal.conf.Ollama
+	(*QuickStart)(nil),          // 7: internal.conf.QuickStart
+	(*Server_HTTP)(nil),         // 8: internal.conf.Server.HTTP
+	(*durationpb.Duration)(nil), // 9: google.protobuf.Duration
 }
-var file_internal_conf_config_proto_depIdxs = []int32{
+var file_internal_pkg_conf_config_proto_depIdxs = []int32{
 	1, // 0: internal.conf.Config.log:type_name -> internal.conf.Log
 	2, // 1: internal.conf.Config.server:type_name -> internal.conf.Server
-	3, // 2: internal.conf.Config.ai:type_name -> internal.conf.AI
-	6, // 3: internal.conf.Server.http:type_name -> internal.conf.Server.HTTP
-	4, // 4: internal.conf.AI.openai:type_name -> internal.conf.OpenAI
-	5, // 5: internal.conf.AI.ollama:type_name -> internal.conf.Ollama
-	7, // 6: internal.conf.Server.HTTP.timeout:type_name -> google.protobuf.Duration
-	7, // [7:7] is the sub-list for method output_type
-	7, // [7:7] is the sub-list for method input_type
-	7, // [7:7] is the sub-list for extension type_name
-	7, // [7:7] is the sub-list for extension extendee
-	0, // [0:7] is the sub-list for field type_name
+	3, // 2: internal.conf.Config.network:type_name -> internal.conf.Network
+	4, // 3: internal.conf.Config.ai:type_name -> internal.conf.AI
+	7, // 4: internal.conf.Config.quickStart:type_name -> internal.conf.QuickStart
+	8, // 5: internal.conf.Server.http:type_name -> internal.conf.Server.HTTP
+	5, // 6: internal.conf.AI.openai:type_name -> internal.conf.OpenAI
+	6, // 7: internal.conf.AI.ollama:type_name -> internal.conf.Ollama
+	9, // 8: internal.conf.Server.HTTP.timeout:type_name -> google.protobuf.Duration
+	9, // [9:9] is the sub-list for method output_type
+	9, // [9:9] is the sub-list for method input_type
+	9, // [9:9] is the sub-list for extension type_name
+	9, // [9:9] is the sub-list for extension extendee
+	0, // [0:9] is the sub-list for field type_name
 }
 
-func init() { file_internal_conf_config_proto_init() }
-func file_internal_conf_config_proto_init() {
-	if File_internal_conf_config_proto != nil {
+func init() { file_internal_pkg_conf_config_proto_init() }
+func file_internal_pkg_conf_config_proto_init() {
+	if File_internal_pkg_conf_config_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_internal_conf_config_proto_rawDesc), len(file_internal_conf_config_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_internal_pkg_conf_config_proto_rawDesc), len(file_internal_pkg_conf_config_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_internal_conf_config_proto_goTypes,
-		DependencyIndexes: file_internal_conf_config_proto_depIdxs,
-		MessageInfos:      file_internal_conf_config_proto_msgTypes,
+		GoTypes:           file_internal_pkg_conf_config_proto_goTypes,
+		DependencyIndexes: file_internal_pkg_conf_config_proto_depIdxs,
+		MessageInfos:      file_internal_pkg_conf_config_proto_msgTypes,
 	}.Build()
-	File_internal_conf_config_proto = out.File
-	file_internal_conf_config_proto_goTypes = nil
-	file_internal_conf_config_proto_depIdxs = nil
+	File_internal_pkg_conf_config_proto = out.File
+	file_internal_pkg_conf_config_proto_goTypes = nil
+	file_internal_pkg_conf_config_proto_depIdxs = nil
 }

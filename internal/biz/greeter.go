@@ -12,7 +12,7 @@ import (
 	kit_log "github.com/fsyyft-go/kit/log"
 
 	app_helloworld_v1 "github.com/fsyyft-ai/eino-wizard/api/helloworld/v1"
-	app_conf "github.com/fsyyft-ai/eino-wizard/internal/conf"
+	app_conf "github.com/fsyyft-ai/eino-wizard/internal/pkg/conf"
 )
 
 // 定义系统错误码。

@@ -2,7 +2,7 @@
 API_PROTO_FILES=$(shell find api -not -path "api/third_party/*" -name *.proto)
 
 # 查找 internal/conf 目录下所有的 proto 文件。
-INTERNAL_CONF_PROTO_FILES=$(shell find internal/conf -name *.proto)
+INTERNAL_CONF_PROTO_FILES=$(shell find internal/pkg/conf -name *.proto)
 
 # 日志文件存储目录。
 LOG_DIR=logs

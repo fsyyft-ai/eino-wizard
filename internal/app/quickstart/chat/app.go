@@ -14,16 +14,20 @@ import (
 
 	"github.com/google/wire"
 
-	appconf "github.com/fsyyft-ai/eino-wizard/internal/conf"
-	applog "github.com/fsyyft-ai/eino-wizard/internal/log"
+	appconf "github.com/fsyyft-ai/eino-wizard/internal/pkg/conf"
+	applog "github.com/fsyyft-ai/eino-wizard/internal/pkg/log"
+	appclient "github.com/fsyyft-ai/eino-wizard/internal/pkg/net/client"
 	apptask "github.com/fsyyft-ai/eino-wizard/internal/task"
+	appquickstart "github.com/fsyyft-ai/eino-wizard/internal/task/quickstart"
 )
 
 // ProviderSet 是 wire 的依赖注入提供者集合。
 // 包含了创建应用实例所需的所有依赖。
 var ProviderSet = wire.NewSet(
 	applog.NewLogger,
-	apptask.NewQuickStartChat,
+	appclient.NewClient,
+	apptask.NewQuickStart,
+	appquickstart.ProviderSet,
 )
 
 // Run 启动并运行任务执行器。
@@ -71,6 +75,8 @@ func Run() {
 		cleanup()
 	} else {
 		// 启动 Web 服务器。
-		_ = task.Run(ctx)
+		if err := task.Run(ctx); nil != err {
+			fmt.Printf("运行失败：%v", err)
+		}
 	}
 }

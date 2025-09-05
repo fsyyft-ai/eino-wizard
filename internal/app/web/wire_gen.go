@@ -12,9 +12,9 @@ package web
 
 import (
 	appbiz "github.com/fsyyft-ai/eino-wizard/internal/biz"
-	appconf "github.com/fsyyft-ai/eino-wizard/internal/conf"
 	appdata "github.com/fsyyft-ai/eino-wizard/internal/data"
-	applog "github.com/fsyyft-ai/eino-wizard/internal/log"
+	appconf "github.com/fsyyft-ai/eino-wizard/internal/pkg/conf"
+	applog "github.com/fsyyft-ai/eino-wizard/internal/pkg/log"
 	appserver "github.com/fsyyft-ai/eino-wizard/internal/server"
 	appservice "github.com/fsyyft-ai/eino-wizard/internal/service"
 )

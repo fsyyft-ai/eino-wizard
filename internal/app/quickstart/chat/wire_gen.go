@@ -11,24 +11,62 @@
 package chat
 
 import (
-	appconf "github.com/fsyyft-ai/eino-wizard/internal/conf"
-	applog "github.com/fsyyft-ai/eino-wizard/internal/log"
+	appconf "github.com/fsyyft-ai/eino-wizard/internal/pkg/conf"
+	applog "github.com/fsyyft-ai/eino-wizard/internal/pkg/log"
+	appclient "github.com/fsyyft-ai/eino-wizard/internal/pkg/net/client"
 	apptask "github.com/fsyyft-ai/eino-wizard/internal/task"
+	appquickstart "github.com/fsyyft-ai/eino-wizard/internal/task/quickstart"
+	apptodoagent "github.com/fsyyft-ai/eino-wizard/internal/task/quickstart/todoagent"
 )
 
 // Injectors from wire.go:
 
-func wireTask(cfg *appconf.Config) (apptask.QuickStartChat, func(), error) {
+func wireTask(cfg *appconf.Config) (apptask.QuickStart, func(), error) {
 	logger, cleanup, err := applog.NewLogger(cfg)
 	if err != nil {
 		return nil, nil, err
 	}
-	quickStartChat, err := apptask.NewQuickStartChat(logger, cfg)
+	chat, cleanup2, err := appquickstart.NewChat(logger, cfg)
 	if err != nil {
 		cleanup()
 		return nil, nil, err
 	}
-	return quickStartChat, func() {
+	clientClient, cleanup3, err := appclient.NewClient(logger, cfg)
+	if err != nil {
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
+	todoAgent, cleanup4, err := apptodoagent.NewTodoAgent(logger, cfg, clientClient)
+	if err != nil {
+		cleanup3()
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
+	quickstartTodoAgent, cleanup5, err := appquickstart.NewTodoAgent(logger, cfg, todoAgent)
+	if err != nil {
+		cleanup4()
+		cleanup3()
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
+	quickStart, cleanup6, err := apptask.NewQuickStart(logger, cfg, chat, quickstartTodoAgent)
+	if err != nil {
+		cleanup5()
+		cleanup4()
+		cleanup3()
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
+	return quickStart, func() {
+		cleanup6()
+		cleanup5()
+		cleanup4()
+		cleanup3()
+		cleanup2()
 		cleanup()
 	}, nil
 }

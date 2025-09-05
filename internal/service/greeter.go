@@ -12,7 +12,7 @@ import (
 
 	app_helloworld_v1 "github.com/fsyyft-ai/eino-wizard/api/helloworld/v1"
 	app_biz "github.com/fsyyft-ai/eino-wizard/internal/biz"
-	app_conf "github.com/fsyyft-ai/eino-wizard/internal/conf"
+	app_conf "github.com/fsyyft-ai/eino-wizard/internal/pkg/conf"
 )
 
 type (

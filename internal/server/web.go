@@ -18,7 +18,7 @@ import (
 	kitruntime "github.com/fsyyft-go/kit/runtime"
 
 	apphelloworldv1 "github.com/fsyyft-ai/eino-wizard/api/helloworld/v1"
-	appconf "github.com/fsyyft-ai/eino-wizard/internal/conf"
+	appconf "github.com/fsyyft-ai/eino-wizard/internal/pkg/conf"
 )
 
 var (
