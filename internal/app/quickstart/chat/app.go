@@ -17,13 +17,15 @@ import (
 	appconf "github.com/fsyyft-ai/eino-wizard/internal/conf"
 	applog "github.com/fsyyft-ai/eino-wizard/internal/log"
 	apptask "github.com/fsyyft-ai/eino-wizard/internal/task"
+	appquickstart "github.com/fsyyft-ai/eino-wizard/internal/task/quickstart"
 )
 
 // ProviderSet 是 wire 的依赖注入提供者集合。
 // 包含了创建应用实例所需的所有依赖。
 var ProviderSet = wire.NewSet(
 	applog.NewLogger,
-	apptask.NewQuickStartChat,
+	apptask.NewQuickStart,
+	appquickstart.ProviderSet,
 )
 
 // Run 启动并运行任务执行器。

@@ -14,21 +14,27 @@ import (
 	appconf "github.com/fsyyft-ai/eino-wizard/internal/conf"
 	applog "github.com/fsyyft-ai/eino-wizard/internal/log"
 	apptask "github.com/fsyyft-ai/eino-wizard/internal/task"
+	appquickstart "github.com/fsyyft-ai/eino-wizard/internal/task/quickstart"
 )
 
 // Injectors from wire.go:
 
-func wireTask(cfg *appconf.Config) (apptask.QuickStartChat, func(), error) {
+func wireTask(cfg *appconf.Config) (apptask.QuickStart, func(), error) {
 	logger, cleanup, err := applog.NewLogger(cfg)
 	if err != nil {
 		return nil, nil, err
 	}
-	quickStartChat, err := apptask.NewQuickStartChat(logger, cfg)
+	chat, err := appquickstart.NewChat(logger, cfg)
 	if err != nil {
 		cleanup()
 		return nil, nil, err
 	}
-	return quickStartChat, func() {
+	quickStart, err := apptask.NewQuickStart(logger, cfg, chat)
+	if err != nil {
+		cleanup()
+		return nil, nil, err
+	}
+	return quickStart, func() {
 		cleanup()
 	}, nil
 }
