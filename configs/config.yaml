@@ -19,6 +19,7 @@ server:
     timeout: 10s
 ai:
   openai:
+    apiKey.env: BAILIAN_API_KEY
   ollama:
     baseUrl: http://127.0.0.1:11434
     model: deepseek-r1:8b
