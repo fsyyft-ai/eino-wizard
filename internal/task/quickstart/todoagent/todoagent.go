@@ -18,7 +18,8 @@ import (
 
 type (
 	TodoAgent interface {
-		Tools() []tool.BaseTool
+		BaseTools() []tool.BaseTool
+		ToolInfos(ctx context.Context) []*schema.ToolInfo
 	}
 
 	todoAgent struct {
@@ -26,6 +27,9 @@ type (
 		logger kitlog.Logger
 		// cfg 存储应用配置信息。
 		cfg *appconf.Config
+
+		tools     []tool.BaseTool
+		toolInfos []*schema.ToolInfo
 	}
 
 	TodoAddParams struct {
@@ -42,10 +46,29 @@ func NewTodoAgent(logger kitlog.Logger, cfg *appconf.Config) (TodoAgent, func(),
 	}, func() {}, nil
 }
 
-func (a *todoAgent) Tools() []tool.BaseTool {
-	return []tool.BaseTool{
-		a.getAddTodoTool(),
+func (a *todoAgent) ToolInfos(ctx context.Context) []*schema.ToolInfo {
+	if nil == a.toolInfos {
+		bts := a.BaseTools()
+		toolInfos := make([]*schema.ToolInfo, 0, len(bts))
+		for _, tool := range bts {
+			info, err := tool.Info(ctx)
+			if err != nil {
+				a.logger.Fatal(err)
+			}
+			toolInfos = append(toolInfos, info)
+		}
+		a.toolInfos = toolInfos
 	}
+	return a.toolInfos
+}
+
+func (a *todoAgent) BaseTools() []tool.BaseTool {
+	if nil == a.tools {
+		a.tools = []tool.BaseTool{
+			a.getAddTodoTool(),
+		}
+	}
+	return a.tools
 }
 
 func (a *todoAgent) getAddTodoTool() tool.InvokableTool {

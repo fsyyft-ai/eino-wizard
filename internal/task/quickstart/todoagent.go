@@ -8,10 +8,15 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/cloudwego/eino-ext/components/model/openai"
+	"github.com/cloudwego/eino/compose"
+	"github.com/cloudwego/eino/schema"
+
 	kitlog "github.com/fsyyft-go/kit/log"
 
 	appconf "github.com/fsyyft-ai/eino-wizard/internal/conf"
 	apptodoagent "github.com/fsyyft-ai/eino-wizard/internal/task/quickstart/todoagent"
+	appbailian "github.com/fsyyft-ai/eino-wizard/pkg/ai/bailian"
 )
 
 type (
@@ -54,7 +59,54 @@ func NewTodoAgent(logger kitlog.Logger, cfg *appconf.Config, agent apptodoagent.
 // 返回值:
 //   - error: 执行过程中可能发生的错误。
 func (h *todoAgent) Run(ctx context.Context) error {
-	todoTools := h.agent.Tools()
-	fmt.Println(len(todoTools))
+	todoTools := h.agent.ToolInfos(ctx)
+	toolsNodeConfig := &compose.ToolsNodeConfig{
+		Tools: h.agent.BaseTools(),
+	}
+	chatModelConfig := &openai.ChatModelConfig{
+		BaseURL: appbailian.OpenAIURLBailian,
+		Model:   appbailian.OpenAIModelBailianQwenPlusLatest,
+		APIKey:  h.cfg.Ai.Openai.ApiKey,
+	}
+
+	chatModel, err := openai.NewChatModel(context.Background(), chatModelConfig)
+	if nil != err {
+		return err
+	}
+
+	err = chatModel.BindTools(todoTools)
+	if nil != err {
+		return err
+	}
+
+	todoToolsNode, err := compose.NewToolNode(ctx, toolsNodeConfig)
+	if nil != err {
+		return err
+	}
+
+	chain := compose.NewChain[[]*schema.Message, []*schema.Message]()
+	chain.
+		AppendChatModel(chatModel, compose.WithNodeName("chat_model")).
+		AppendToolsNode(todoToolsNode, compose.WithNodeName("tools"))
+
+	agent, err := chain.Compile(ctx)
+	if nil != err {
+		return err
+	}
+
+	resp, err := agent.Invoke(ctx, []*schema.Message{
+		{
+			Role:    schema.User,
+			Content: "添加一个学习 Eino 的 TODO，同时搜索一下 fsyyft-ai/eino-wizard 的仓库地址",
+		},
+	})
+	if err != nil {
+		return err
+	}
+
+	for _, msg := range resp {
+		fmt.Println(msg.Content)
+	}
+
 	return nil
 }

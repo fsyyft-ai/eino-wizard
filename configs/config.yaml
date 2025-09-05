@@ -17,7 +17,7 @@ server:
     # 请求超时时间。
     timeout: 10s
 quickStart:
-  command: chat
+  command: todo
 ai:
   localTest: false
   openai:
