@@ -40,6 +40,7 @@ type (
 //
 // 返回值:
 //   - TodoAgent: 一个新的 TodoAgent 实例。
+//   - func()：清理函数，用于在初始化失败时进行资源释放。
 //   - error: 创建实例过程中可能发生的错误。
 func NewTodoAgent(logger kitlog.Logger, cfg *appconf.Config, agent apptodoagent.TodoAgent) (TodoAgent, func(), error) {
 	return &todoAgent{logger: logger, cfg: cfg, agent: agent}, func() {}, nil

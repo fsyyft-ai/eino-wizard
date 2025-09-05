@@ -46,6 +46,7 @@ type (
 //
 // 返回值:
 //   - QuickStart: 一个新的 QuickStart 实例。
+//   - func()：清理函数，用于在初始化失败时进行资源释放。
 //   - error: 创建实例过程中可能发生的错误。
 func NewQuickStart(logger kitlog.Logger, cfg *appconf.Config, chat appquickstart.Chat, todo appquickstart.TodoAgent) (QuickStart, func(), error) {
 	return &quickStart{logger: logger, cfg: cfg, chat: chat, todo: todo}, func() {}, nil

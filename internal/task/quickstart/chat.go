@@ -40,9 +40,10 @@ type (
 //
 // 返回值:
 //   - Chat: 一个新的 Chat 实例。
+//   - func()：清理函数，用于在初始化失败时进行资源释放。
 //   - error: 创建实例过程中可能发生的错误。
-func NewChat(logger kitlog.Logger, cfg *appconf.Config) (Chat, error) {
-	return &chat{logger: logger, cfg: cfg}, nil
+func NewChat(logger kitlog.Logger, cfg *appconf.Config) (Chat, func(), error) {
+	return &chat{logger: logger, cfg: cfg}, func() {}, nil
 }
 
 // Run 执行 Chat 任务。

@@ -25,30 +25,34 @@ func wireTask(cfg *appconf.Config) (apptask.QuickStart, func(), error) {
 	if err != nil {
 		return nil, nil, err
 	}
-	chat, err := appquickstart.NewChat(logger, cfg)
+	chat, cleanup2, err := appquickstart.NewChat(logger, cfg)
 	if err != nil {
 		cleanup()
 		return nil, nil, err
 	}
-	todoAgent, cleanup2, err := apptodoagent.NewTodoAgent(logger, cfg)
-	if err != nil {
-		cleanup()
-		return nil, nil, err
-	}
-	quickstartTodoAgent, cleanup3, err := appquickstart.NewTodoAgent(logger, cfg, todoAgent)
+	todoAgent, cleanup3, err := apptodoagent.NewTodoAgent(logger, cfg)
 	if err != nil {
 		cleanup2()
 		cleanup()
 		return nil, nil, err
 	}
-	quickStart, cleanup4, err := apptask.NewQuickStart(logger, cfg, chat, quickstartTodoAgent)
+	quickstartTodoAgent, cleanup4, err := appquickstart.NewTodoAgent(logger, cfg, todoAgent)
 	if err != nil {
 		cleanup3()
 		cleanup2()
 		cleanup()
 		return nil, nil, err
 	}
+	quickStart, cleanup5, err := apptask.NewQuickStart(logger, cfg, chat, quickstartTodoAgent)
+	if err != nil {
+		cleanup4()
+		cleanup3()
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
 	return quickStart, func() {
+		cleanup5()
 		cleanup4()
 		cleanup3()
 		cleanup2()
