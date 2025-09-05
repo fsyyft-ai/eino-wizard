@@ -6,7 +6,6 @@ log:
   output: logs/app.log
   # 日志级别，可选值：debug、info、warn、error。
   level: debug
-
 # 服务器配置。
 server:
   # HTTP 服务器配置。
@@ -18,6 +17,7 @@ server:
     # 请求超时时间。
     timeout: 10s
 ai:
+  localTest: false
   openai:
     apiKey.env: BAILIAN_API_KEY
   ollama:
