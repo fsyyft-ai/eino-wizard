@@ -37,6 +37,13 @@ type (
 		StartAt  *int64 `json:"started_at,omitempty"` // 开始时间
 		Deadline *int64 `json:"deadline,omitempty"`
 	}
+	TodoUpdateParams struct {
+		ID        string  `json:"id" jsonschema:"description=id of the todo"`
+		Content   *string `json:"content,omitempty" jsonschema:"description=content of the todo"`
+		StartedAt *int64  `json:"started_at,omitempty" jsonschema:"description=start time in unix timestamp"`
+		Deadline  *int64  `json:"deadline,omitempty" jsonschema:"description=deadline of the todo in unix timestamp"`
+		Done      *bool   `json:"done,omitempty" jsonschema:"description=done status"`
+	}
 )
 
 func NewTodoAgent(logger kitlog.Logger, cfg *appconf.Config) (TodoAgent, func(), error) {
@@ -66,11 +73,15 @@ func (a *todoAgent) BaseTools() []tool.BaseTool {
 	if nil == a.tools {
 		a.tools = []tool.BaseTool{
 			a.getAddTodoTool(),
+			a.getUpdateTodoTool(),
 		}
 	}
 	return a.tools
 }
 
+// -----------------------------------------------------------------------------
+// 方式一：使用 NewTool 构建。
+// -----------------------------------------------------------------------------
 func (a *todoAgent) getAddTodoTool() tool.InvokableTool {
 	// 工具信息
 	info := &schema.ToolInfo{
@@ -100,4 +111,23 @@ func (a *todoAgent) getAddTodoTool() tool.InvokableTool {
 func (a *todoAgent) addTodoFunc(_ context.Context, params *TodoAddParams) (string, error) {
 	a.logger.Infof("invoke tool add_todo: %+v", params)
 	return `{"msg": "add todo success"}`, nil
+}
+
+// -----------------------------------------------------------------------------
+// 方式二：使用 InferTool 构建。
+// -----------------------------------------------------------------------------
+
+func (a *todoAgent) getUpdateTodoTool() tool.InvokableTool {
+	updateTool, err := utils.InferTool("update_todo", "Update a todo item, eg: content,deadline...", a.UpdateTodoFunc)
+	if err != nil {
+		a.logger.Errorf("InferTool failed, err=%v", err)
+		return nil
+	}
+	a.logger.Info("update_todo tool inferred successfully")
+	return updateTool
+}
+func (a *todoAgent) UpdateTodoFunc(_ context.Context, params *TodoUpdateParams) (string, error) {
+	a.logger.Infof("invoke tool update_todo: %+v", params)
+	// Mock 处理逻辑。
+	return `{"msg": "update todo success"}`, nil
 }
