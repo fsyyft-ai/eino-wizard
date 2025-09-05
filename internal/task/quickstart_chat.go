@@ -8,6 +8,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/cloudwego/eino/components/model"
+
 	kitlog "github.com/fsyyft-go/kit/log"
 
 	appconf "github.com/fsyyft-ai/eino-wizard/internal/conf"
@@ -54,8 +56,12 @@ func (h *quickStartChat) Run(ctx context.Context) error {
 	fmt.Println("===create messages===")
 	messages := appchat.CreateMessagesFromTemplate()
 	fmt.Println("===create llm===")
-	// cm := appchat.CreateOllamaChatModel(ctx, h.logger, h.cfg)
-	cm := appchat.CreateOpenAIChatModel(ctx, h.logger, h.cfg)
+	var cm model.ToolCallingChatModel
+	if h.cfg.Ai.LocalTest {
+		cm = appchat.CreateOllamaChatModel(ctx, h.logger, h.cfg)
+	} else {
+		cm = appchat.CreateOpenAIChatModel(ctx, h.logger, h.cfg)
+	}
 	fmt.Println("===llm stream generate===")
 	streamResult := appchat.Stream(ctx, cm, messages)
 	appchat.ReportStream(streamResult)

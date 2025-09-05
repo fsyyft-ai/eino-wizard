@@ -208,6 +208,7 @@ type AI struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Openai        *OpenAI                `protobuf:"bytes,1,opt,name=openai,proto3" json:"openai,omitempty"`
 	Ollama        *Ollama                `protobuf:"bytes,2,opt,name=ollama,proto3" json:"ollama,omitempty"`
+	LocalTest     bool                   `protobuf:"varint,3,opt,name=localTest,proto3" json:"localTest,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -254,6 +255,13 @@ func (x *AI) GetOllama() *Ollama {
 		return x.Ollama
 	}
 	return nil
+}
+
+func (x *AI) GetLocalTest() bool {
+	if x != nil {
+		return x.LocalTest
+	}
+	return false
 }
 
 type OpenAI struct {
@@ -443,10 +451,11 @@ const file_internal_conf_config_proto_rawDesc = "" +
 	"\x04HTTP\x12\x18\n" +
 	"\anetwork\x18\x01 \x01(\tR\anetwork\x12\x12\n" +
 	"\x04addr\x18\x02 \x01(\tR\x04addr\x123\n" +
-	"\atimeout\x18\x03 \x01(\v2\x19.google.protobuf.DurationR\atimeout\"b\n" +
+	"\atimeout\x18\x03 \x01(\v2\x19.google.protobuf.DurationR\atimeout\"\x80\x01\n" +
 	"\x02AI\x12-\n" +
 	"\x06openai\x18\x01 \x01(\v2\x15.internal.conf.OpenAIR\x06openai\x12-\n" +
-	"\x06ollama\x18\x02 \x01(\v2\x15.internal.conf.OllamaR\x06ollama\":\n" +
+	"\x06ollama\x18\x02 \x01(\v2\x15.internal.conf.OllamaR\x06ollama\x12\x1c\n" +
+	"\tlocalTest\x18\x03 \x01(\bR\tlocalTest\":\n" +
 	"\x06OpenAI\x12\x18\n" +
 	"\abaseUrl\x18\x01 \x01(\tR\abaseUrl\x12\x16\n" +
 	"\x06apiKey\x18\x02 \x01(\tR\x06apiKey\"8\n" +

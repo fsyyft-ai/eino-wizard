@@ -52,6 +52,7 @@ message Server {
 message AI {
   OpenAI openai = 1;
   Ollama ollama = 2;
+  bool localTest = 3;
 }
 
 message OpenAI {
