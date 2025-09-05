@@ -94,12 +94,27 @@ func (h *todoAgent) Run(ctx context.Context) error {
 		return err
 	}
 
-	resp, err := agent.Invoke(ctx, []*schema.Message{
-		{
-			Role:    schema.User,
-			Content: "添加一个学习 Eino 的 TODO，同时搜索一下 fsyyft-ai/eino-wizard 的仓库地址",
-		},
-	})
+	msg := &schema.Message{
+		Role:    schema.User,
+		Content: "添加一个学习 Eino 的 TODO，同时搜索一下 fsyyft-ai/eino-wizard 的仓库地址",
+	}
+	if err := h.invoke(ctx, agent, msg); nil != err {
+		return err
+	}
+
+	msg = &schema.Message{
+		Role:    schema.User,
+		Content: "获取当前所有的 TODO 列表",
+	}
+	if err := h.invoke(ctx, agent, msg); nil != err {
+		return err
+	}
+
+	return nil
+}
+
+func (h *todoAgent) invoke(ctx context.Context, agent compose.Runnable[[]*schema.Message, []*schema.Message], in *schema.Message) error {
+	resp, err := agent.Invoke(ctx, []*schema.Message{in})
 	if err != nil {
 		return err
 	}

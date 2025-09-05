@@ -44,6 +44,12 @@ type (
 		Deadline  *int64  `json:"deadline,omitempty" jsonschema:"description=deadline of the todo in unix timestamp"`
 		Done      *bool   `json:"done,omitempty" jsonschema:"description=done status"`
 	}
+	listTodoTool struct {
+		// logger 用于记录任务执行过程中的日志信息。
+		logger kitlog.Logger
+		// cfg 存储应用配置信息。
+		cfg *appconf.Config
+	}
 )
 
 func NewTodoAgent(logger kitlog.Logger, cfg *appconf.Config) (TodoAgent, func(), error) {
@@ -74,6 +80,10 @@ func (a *todoAgent) BaseTools() []tool.BaseTool {
 		a.tools = []tool.BaseTool{
 			a.getAddTodoTool(),
 			a.getUpdateTodoTool(),
+			&listTodoTool{
+				cfg:    a.cfg,
+				logger: a.logger,
+			},
 		}
 	}
 	return a.tools
@@ -130,4 +140,33 @@ func (a *todoAgent) UpdateTodoFunc(_ context.Context, params *TodoUpdateParams) 
 	a.logger.Infof("invoke tool update_todo: %+v", params)
 	// Mock 处理逻辑。
 	return `{"msg": "update todo success"}`, nil
+}
+
+// -----------------------------------------------------------------------------
+// 方式三：实现 Tool 接口。
+// -----------------------------------------------------------------------------
+
+var (
+	_ tool.BaseTool      = (*listTodoTool)(nil)
+	_ tool.InvokableTool = (*listTodoTool)(nil)
+)
+
+func (t *listTodoTool) Info(ctx context.Context) (*schema.ToolInfo, error) {
+	return &schema.ToolInfo{
+		Name: "list_todo",
+		Desc: "List all todo items",
+		ParamsOneOf: schema.NewParamsOneOfByParams(map[string]*schema.ParameterInfo{
+			"finished": {
+				Desc:     "filter todo items if finished",
+				Type:     schema.Boolean,
+				Required: false,
+			},
+		}),
+	}, nil
+}
+
+func (t *listTodoTool) InvokableRun(ctx context.Context, argumentsInJSON string, opts ...tool.Option) (string, error) {
+	t.logger.Infof("list todo tool run arguments: %s", argumentsInJSON)
+	// Mock 调用逻辑。
+	return `{"todos": [{"id": "1", "content": "在2024年12月10日之前完成Eino项目演示文稿的准备工作", "started_at": 1717401600, "deadline": 1717488000, "done": false}]}`, nil
 }
