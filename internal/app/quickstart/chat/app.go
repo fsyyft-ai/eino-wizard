@@ -16,6 +16,7 @@ import (
 
 	appconf "github.com/fsyyft-ai/eino-wizard/internal/pkg/conf"
 	applog "github.com/fsyyft-ai/eino-wizard/internal/pkg/log"
+	appclient "github.com/fsyyft-ai/eino-wizard/internal/pkg/net/client"
 	apptask "github.com/fsyyft-ai/eino-wizard/internal/task"
 	appquickstart "github.com/fsyyft-ai/eino-wizard/internal/task/quickstart"
 )
@@ -24,6 +25,7 @@ import (
 // 包含了创建应用实例所需的所有依赖。
 var ProviderSet = wire.NewSet(
 	applog.NewLogger,
+	appclient.NewClient,
 	apptask.NewQuickStart,
 	appquickstart.ProviderSet,
 )

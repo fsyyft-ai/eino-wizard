@@ -6,18 +6,16 @@ package todoagent
 
 import (
 	"context"
-	"net"
-	"net/http"
 
 	"github.com/cloudwego/eino-ext/components/tool/duckduckgo/v2"
 	"github.com/cloudwego/eino/components/tool"
 	"github.com/cloudwego/eino/components/tool/utils"
 	"github.com/cloudwego/eino/schema"
-	"github.com/hashicorp/go.net/proxy"
 
 	kitlog "github.com/fsyyft-go/kit/log"
 
 	appconf "github.com/fsyyft-ai/eino-wizard/internal/pkg/conf"
+	appclient "github.com/fsyyft-ai/eino-wizard/internal/pkg/net/client"
 )
 
 type (
@@ -31,6 +29,8 @@ type (
 		logger kitlog.Logger
 		// cfg 存储应用配置信息。
 		cfg *appconf.Config
+
+		client appclient.Client
 
 		tools     []tool.BaseTool
 		toolInfos []*schema.ToolInfo
@@ -56,10 +56,11 @@ type (
 	}
 )
 
-func NewTodoAgent(logger kitlog.Logger, cfg *appconf.Config) (TodoAgent, func(), error) {
+func NewTodoAgent(logger kitlog.Logger, cfg *appconf.Config, client appclient.Client) (TodoAgent, func(), error) {
 	return &todoAgent{
 		logger: logger,
 		cfg:    cfg,
+		client: client,
 	}, func() {}, nil
 }
 
@@ -180,21 +181,9 @@ func (t *listTodoTool) InvokableRun(ctx context.Context, argumentsInJSON string,
 // 方式四：使用官方封装的工具。
 // -----------------------------------------------------------------------------
 func (a *todoAgent) getSearchTool(ctx context.Context) tool.InvokableTool {
-	// set socks5 proxy
-	dialer, derr := proxy.SOCKS5("tcp", "10.254.157.11:1890", nil, proxy.Direct)
-	if derr != nil {
-		a.logger.Errorf("init socks5 proxy failed, err=%v", derr)
-		return nil
-	}
 	searchTool, err := duckduckgo.NewTextSearchTool(ctx, &duckduckgo.Config{
-		Region: duckduckgo.RegionCN,
-		HTTPClient: &http.Client{
-			Transport: &http.Transport{
-				DialContext: func(c context.Context, network, addr string) (net.Conn, error) {
-					return dialer.Dial(network, addr)
-				},
-			},
-		},
+		Region:     duckduckgo.RegionCN,
+		HTTPClient: a.client.Client(),
 	})
 	if err != nil {
 		a.logger.Errorf("SearchTool failed, err=%v", err)
