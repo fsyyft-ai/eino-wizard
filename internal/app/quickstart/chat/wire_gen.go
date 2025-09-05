@@ -15,6 +15,7 @@ import (
 	applog "github.com/fsyyft-ai/eino-wizard/internal/log"
 	apptask "github.com/fsyyft-ai/eino-wizard/internal/task"
 	appquickstart "github.com/fsyyft-ai/eino-wizard/internal/task/quickstart"
+	apptodoagent "github.com/fsyyft-ai/eino-wizard/internal/task/quickstart/todoagent"
 )
 
 // Injectors from wire.go:
@@ -29,12 +30,28 @@ func wireTask(cfg *appconf.Config) (apptask.QuickStart, func(), error) {
 		cleanup()
 		return nil, nil, err
 	}
-	quickStart, err := apptask.NewQuickStart(logger, cfg, chat)
+	todoAgent, cleanup2, err := apptodoagent.NewTodoAgent(logger, cfg)
 	if err != nil {
 		cleanup()
 		return nil, nil, err
 	}
+	quickstartTodoAgent, cleanup3, err := appquickstart.NewTodoAgent(logger, cfg, todoAgent)
+	if err != nil {
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
+	quickStart, cleanup4, err := apptask.NewQuickStart(logger, cfg, chat, quickstartTodoAgent)
+	if err != nil {
+		cleanup3()
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
 	return quickStart, func() {
+		cleanup4()
+		cleanup3()
+		cleanup2()
 		cleanup()
 	}, nil
 }

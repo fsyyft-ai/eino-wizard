@@ -16,6 +16,8 @@ server:
     addr: 127.0.0.1:44444
     # 请求超时时间。
     timeout: 10s
+quickStart:
+  command: chat
 ai:
   localTest: false
   openai:

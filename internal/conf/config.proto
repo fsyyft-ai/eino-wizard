@@ -22,6 +22,7 @@ message Config {
   // Server 配置应用程序的服务器设置。
   Server server = 2;
   AI ai = 3;
+  QuickStart quickStart = 4;
 }
 
 // Log 定义日志系统的详细配置参数。
@@ -65,3 +66,5 @@ message Ollama {
   string baseUrl = 1;
   string model = 2;
 }
+
+message QuickStart { string command = 1; }

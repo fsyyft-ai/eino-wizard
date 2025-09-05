@@ -6,11 +6,17 @@ package task
 
 import (
 	"context"
+	"errors"
 
 	kitlog "github.com/fsyyft-go/kit/log"
 
 	appconf "github.com/fsyyft-ai/eino-wizard/internal/conf"
 	appquickstart "github.com/fsyyft-ai/eino-wizard/internal/task/quickstart"
+)
+
+const (
+	CommandChat = "chat"
+	CommandTodo = "todo"
 )
 
 type (
@@ -28,6 +34,7 @@ type (
 		cfg *appconf.Config
 
 		chat appquickstart.Chat
+		todo appquickstart.TodoAgent
 	}
 )
 
@@ -40,8 +47,8 @@ type (
 // 返回值:
 //   - QuickStart: 一个新的 QuickStart 实例。
 //   - error: 创建实例过程中可能发生的错误。
-func NewQuickStart(logger kitlog.Logger, cfg *appconf.Config, chat appquickstart.Chat) (QuickStart, error) {
-	return &quickStart{logger: logger, cfg: cfg, chat: chat}, nil
+func NewQuickStart(logger kitlog.Logger, cfg *appconf.Config, chat appquickstart.Chat, todo appquickstart.TodoAgent) (QuickStart, func(), error) {
+	return &quickStart{logger: logger, cfg: cfg, chat: chat, todo: todo}, func() {}, nil
 }
 
 // Run 执行 QuickStart 任务。
@@ -52,6 +59,12 @@ func NewQuickStart(logger kitlog.Logger, cfg *appconf.Config, chat appquickstart
 // 返回值:
 //   - error: 执行过程中可能发生的错误。
 func (h *quickStart) Run(ctx context.Context) error {
-	err := h.chat.Run(ctx)
-	return err
+	switch h.cfg.QuickStart.Command {
+	case CommandChat:
+		return h.chat.Run(ctx)
+	case CommandTodo:
+		return h.todo.Run(ctx)
+	default:
+		return errors.New("不存在该命令，task/quickstart 无法运行")
+	}
 }
