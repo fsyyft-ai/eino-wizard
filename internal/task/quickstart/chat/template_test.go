@@ -24,7 +24,7 @@ func TestCreateMessagesFromTemplate(t *testing.T) {
 
 		for _, tc := range testCases {
 
-			messages := createMessagesFromTemplate()
+			messages := CreateMessagesFromTemplate()
 			t.Logf("Testing %s：%v", tc.name, messages)
 		}
 	})

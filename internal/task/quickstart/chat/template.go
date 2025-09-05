@@ -26,7 +26,7 @@ func createTemplate() prompt.ChatTemplate {
 	)
 }
 
-func createMessagesFromTemplate() []*schema.Message {
+func CreateMessagesFromTemplate() []*schema.Message {
 	template := createTemplate()
 
 	// 使用模板生成消息。

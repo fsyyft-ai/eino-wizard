@@ -1,6 +1,7 @@
 // Copyright 2025 fsyyft-ai
 //
-// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+// Licensed under the MIT License. See LICENSE file in the project root for full
+// license information.
 
 // 指定 Protocol Buffers 语法版本为 proto3。
 
@@ -15,13 +16,12 @@
 package conf
 
 import (
-	reflect "reflect"
-	sync "sync"
-	unsafe "unsafe"
-
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	durationpb "google.golang.org/protobuf/types/known/durationpb"
+	reflect "reflect"
+	sync "sync"
+	unsafe "unsafe"
 )
 
 const (
@@ -38,6 +38,7 @@ type Config struct {
 	Log *Log `protobuf:"bytes,1,opt,name=log,proto3" json:"log,omitempty"`
 	// Server 配置应用程序的服务器设置。
 	Server        *Server `protobuf:"bytes,2,opt,name=server,proto3" json:"server,omitempty"`
+	Ai            *AI     `protobuf:"bytes,3,opt,name=ai,proto3" json:"ai,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -82,6 +83,13 @@ func (x *Config) GetLog() *Log {
 func (x *Config) GetServer() *Server {
 	if x != nil {
 		return x.Server
+	}
+	return nil
+}
+
+func (x *Config) GetAi() *AI {
+	if x != nil {
+		return x.Ai
 	}
 	return nil
 }
@@ -196,6 +204,163 @@ func (x *Server) GetHttp() *Server_HTTP {
 	return nil
 }
 
+type AI struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Openai        *OpenAI                `protobuf:"bytes,1,opt,name=openai,proto3" json:"openai,omitempty"`
+	Ollama        *Ollama                `protobuf:"bytes,2,opt,name=ollama,proto3" json:"ollama,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AI) Reset() {
+	*x = AI{}
+	mi := &file_internal_conf_config_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AI) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AI) ProtoMessage() {}
+
+func (x *AI) ProtoReflect() protoreflect.Message {
+	mi := &file_internal_conf_config_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AI.ProtoReflect.Descriptor instead.
+func (*AI) Descriptor() ([]byte, []int) {
+	return file_internal_conf_config_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *AI) GetOpenai() *OpenAI {
+	if x != nil {
+		return x.Openai
+	}
+	return nil
+}
+
+func (x *AI) GetOllama() *Ollama {
+	if x != nil {
+		return x.Ollama
+	}
+	return nil
+}
+
+type OpenAI struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	BaseUrl       string                 `protobuf:"bytes,1,opt,name=baseUrl,proto3" json:"baseUrl,omitempty"`
+	ApiKey        string                 `protobuf:"bytes,2,opt,name=apiKey,proto3" json:"apiKey,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *OpenAI) Reset() {
+	*x = OpenAI{}
+	mi := &file_internal_conf_config_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *OpenAI) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OpenAI) ProtoMessage() {}
+
+func (x *OpenAI) ProtoReflect() protoreflect.Message {
+	mi := &file_internal_conf_config_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OpenAI.ProtoReflect.Descriptor instead.
+func (*OpenAI) Descriptor() ([]byte, []int) {
+	return file_internal_conf_config_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *OpenAI) GetBaseUrl() string {
+	if x != nil {
+		return x.BaseUrl
+	}
+	return ""
+}
+
+func (x *OpenAI) GetApiKey() string {
+	if x != nil {
+		return x.ApiKey
+	}
+	return ""
+}
+
+// Ollama 配置 ollama 的参数。
+type Ollama struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	BaseUrl       string                 `protobuf:"bytes,1,opt,name=baseUrl,proto3" json:"baseUrl,omitempty"`
+	Model         string                 `protobuf:"bytes,2,opt,name=model,proto3" json:"model,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Ollama) Reset() {
+	*x = Ollama{}
+	mi := &file_internal_conf_config_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Ollama) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Ollama) ProtoMessage() {}
+
+func (x *Ollama) ProtoReflect() protoreflect.Message {
+	mi := &file_internal_conf_config_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Ollama.ProtoReflect.Descriptor instead.
+func (*Ollama) Descriptor() ([]byte, []int) {
+	return file_internal_conf_config_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *Ollama) GetBaseUrl() string {
+	if x != nil {
+		return x.BaseUrl
+	}
+	return ""
+}
+
+func (x *Ollama) GetModel() string {
+	if x != nil {
+		return x.Model
+	}
+	return ""
+}
+
 // HTTP 定义 HTTP 服务器的配置参数。
 type Server_HTTP struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -211,7 +376,7 @@ type Server_HTTP struct {
 
 func (x *Server_HTTP) Reset() {
 	*x = Server_HTTP{}
-	mi := &file_internal_conf_config_proto_msgTypes[3]
+	mi := &file_internal_conf_config_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -223,7 +388,7 @@ func (x *Server_HTTP) String() string {
 func (*Server_HTTP) ProtoMessage() {}
 
 func (x *Server_HTTP) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_conf_config_proto_msgTypes[3]
+	mi := &file_internal_conf_config_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -264,10 +429,11 @@ var File_internal_conf_config_proto protoreflect.FileDescriptor
 
 const file_internal_conf_config_proto_rawDesc = "" +
 	"\n" +
-	"\x1ainternal/conf/config.proto\x12\rinternal.conf\x1a\x1egoogle/protobuf/duration.proto\"]\n" +
+	"\x1ainternal/conf/config.proto\x12\rinternal.conf\x1a\x1egoogle/protobuf/duration.proto\"\x80\x01\n" +
 	"\x06Config\x12$\n" +
 	"\x03log\x18\x01 \x01(\v2\x12.internal.conf.LogR\x03log\x12-\n" +
-	"\x06server\x18\x02 \x01(\v2\x15.internal.conf.ServerR\x06server\"G\n" +
+	"\x06server\x18\x02 \x01(\v2\x15.internal.conf.ServerR\x06server\x12!\n" +
+	"\x02ai\x18\x03 \x01(\v2\x11.internal.conf.AIR\x02ai\"G\n" +
 	"\x03Log\x12\x12\n" +
 	"\x04type\x18\x01 \x01(\tR\x04type\x12\x16\n" +
 	"\x06output\x18\x02 \x01(\tR\x06output\x12\x14\n" +
@@ -277,7 +443,16 @@ const file_internal_conf_config_proto_rawDesc = "" +
 	"\x04HTTP\x12\x18\n" +
 	"\anetwork\x18\x01 \x01(\tR\anetwork\x12\x12\n" +
 	"\x04addr\x18\x02 \x01(\tR\x04addr\x123\n" +
-	"\atimeout\x18\x03 \x01(\v2\x19.google.protobuf.DurationR\atimeoutB5Z3github.com/fsyyft-go/eino-wizard/internal/conf;confb\x06proto3"
+	"\atimeout\x18\x03 \x01(\v2\x19.google.protobuf.DurationR\atimeout\"b\n" +
+	"\x02AI\x12-\n" +
+	"\x06openai\x18\x01 \x01(\v2\x15.internal.conf.OpenAIR\x06openai\x12-\n" +
+	"\x06ollama\x18\x02 \x01(\v2\x15.internal.conf.OllamaR\x06ollama\":\n" +
+	"\x06OpenAI\x12\x18\n" +
+	"\abaseUrl\x18\x01 \x01(\tR\abaseUrl\x12\x16\n" +
+	"\x06apiKey\x18\x02 \x01(\tR\x06apiKey\"8\n" +
+	"\x06Ollama\x12\x18\n" +
+	"\abaseUrl\x18\x01 \x01(\tR\abaseUrl\x12\x14\n" +
+	"\x05model\x18\x02 \x01(\tR\x05modelB5Z3github.com/fsyyft-ai/eino-wizard/internal/conf;confb\x06proto3"
 
 var (
 	file_internal_conf_config_proto_rawDescOnce sync.Once
@@ -291,24 +466,30 @@ func file_internal_conf_config_proto_rawDescGZIP() []byte {
 	return file_internal_conf_config_proto_rawDescData
 }
 
-var file_internal_conf_config_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_internal_conf_config_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_internal_conf_config_proto_goTypes = []any{
 	(*Config)(nil),              // 0: internal.conf.Config
 	(*Log)(nil),                 // 1: internal.conf.Log
 	(*Server)(nil),              // 2: internal.conf.Server
-	(*Server_HTTP)(nil),         // 3: internal.conf.Server.HTTP
-	(*durationpb.Duration)(nil), // 4: google.protobuf.Duration
+	(*AI)(nil),                  // 3: internal.conf.AI
+	(*OpenAI)(nil),              // 4: internal.conf.OpenAI
+	(*Ollama)(nil),              // 5: internal.conf.Ollama
+	(*Server_HTTP)(nil),         // 6: internal.conf.Server.HTTP
+	(*durationpb.Duration)(nil), // 7: google.protobuf.Duration
 }
 var file_internal_conf_config_proto_depIdxs = []int32{
 	1, // 0: internal.conf.Config.log:type_name -> internal.conf.Log
 	2, // 1: internal.conf.Config.server:type_name -> internal.conf.Server
-	3, // 2: internal.conf.Server.http:type_name -> internal.conf.Server.HTTP
-	4, // 3: internal.conf.Server.HTTP.timeout:type_name -> google.protobuf.Duration
-	4, // [4:4] is the sub-list for method output_type
-	4, // [4:4] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	3, // 2: internal.conf.Config.ai:type_name -> internal.conf.AI
+	6, // 3: internal.conf.Server.http:type_name -> internal.conf.Server.HTTP
+	4, // 4: internal.conf.AI.openai:type_name -> internal.conf.OpenAI
+	5, // 5: internal.conf.AI.ollama:type_name -> internal.conf.Ollama
+	7, // 6: internal.conf.Server.HTTP.timeout:type_name -> google.protobuf.Duration
+	7, // [7:7] is the sub-list for method output_type
+	7, // [7:7] is the sub-list for method input_type
+	7, // [7:7] is the sub-list for extension type_name
+	7, // [7:7] is the sub-list for extension extendee
+	0, // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_internal_conf_config_proto_init() }
@@ -322,7 +503,7 @@ func file_internal_conf_config_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_internal_conf_config_proto_rawDesc), len(file_internal_conf_config_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

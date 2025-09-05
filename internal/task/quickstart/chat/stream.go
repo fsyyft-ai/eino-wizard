@@ -12,7 +12,7 @@ import (
 	"github.com/cloudwego/eino/schema"
 )
 
-func reportStream(sr *schema.StreamReader[*schema.Message]) {
+func ReportStream(sr *schema.StreamReader[*schema.Message]) {
 	defer sr.Close()
 
 	i := 0

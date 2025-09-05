@@ -17,3 +17,8 @@ server:
     addr: 127.0.0.1:44444
     # 请求超时时间。
     timeout: 10s
+ai:
+  openai:
+  ollama:
+    baseUrl: http://127.0.0.1:11434
+    model: deepseek-r1:8b
