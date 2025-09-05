@@ -10,7 +10,7 @@ package task
 import (
 	"github.com/google/wire"
 
-	appconf "github.com/fsyyft-ai/eino-wizard/internal/conf"
+	appconf "github.com/fsyyft-ai/eino-wizard/internal/pkg/conf"
 	apptask "github.com/fsyyft-ai/eino-wizard/internal/task"
 )
 

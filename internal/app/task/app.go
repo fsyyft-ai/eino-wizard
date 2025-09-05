@@ -14,8 +14,8 @@ import (
 
 	"github.com/google/wire"
 
-	appconf "github.com/fsyyft-ai/eino-wizard/internal/conf"
-	applog "github.com/fsyyft-ai/eino-wizard/internal/log"
+	appconf "github.com/fsyyft-ai/eino-wizard/internal/pkg/conf"
+	applog "github.com/fsyyft-ai/eino-wizard/internal/pkg/log"
 )
 
 // ProviderSet 是 wire 的依赖注入提供者集合。

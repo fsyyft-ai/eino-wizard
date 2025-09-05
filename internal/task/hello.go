@@ -12,7 +12,7 @@ import (
 	kit_config "github.com/fsyyft-go/kit/config"
 	kit_log "github.com/fsyyft-go/kit/log"
 
-	app_conf "github.com/fsyyft-ai/eino-wizard/internal/conf"
+	app_conf "github.com/fsyyft-ai/eino-wizard/internal/pkg/conf"
 )
 
 type (

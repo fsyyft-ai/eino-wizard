@@ -10,7 +10,7 @@ import (
 	kit_log "github.com/fsyyft-go/kit/log"
 
 	app_biz "github.com/fsyyft-ai/eino-wizard/internal/biz"
-	app_conf "github.com/fsyyft-ai/eino-wizard/internal/conf"
+	app_conf "github.com/fsyyft-ai/eino-wizard/internal/pkg/conf"
 )
 
 // greeterRepo 实现了 app_biz.GreeterRepo 接口，提供 Greeter 相关的数据访问操作。

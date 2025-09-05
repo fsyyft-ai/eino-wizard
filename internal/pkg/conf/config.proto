@@ -10,7 +10,7 @@ syntax = "proto3";
 package internal.conf;
 
 // 指定生成的 Go 代码的包路径和包名。
-option go_package = "github.com/fsyyft-ai/eino-wizard/internal/conf;conf";
+option go_package = "github.com/fsyyft-ai/eino-wizard/internal/pkg/conf;conf";
 
 // 导入 google.protobuf.Duration 类型。
 import "google/protobuf/duration.proto";

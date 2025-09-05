@@ -12,7 +12,7 @@ import (
 
 	kitlog "github.com/fsyyft-go/kit/log"
 
-	appconf "github.com/fsyyft-ai/eino-wizard/internal/conf"
+	appconf "github.com/fsyyft-ai/eino-wizard/internal/pkg/conf"
 	appchat "github.com/fsyyft-ai/eino-wizard/internal/task/quickstart/chat"
 )
 

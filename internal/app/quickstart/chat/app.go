@@ -14,8 +14,8 @@ import (
 
 	"github.com/google/wire"
 
-	appconf "github.com/fsyyft-ai/eino-wizard/internal/conf"
-	applog "github.com/fsyyft-ai/eino-wizard/internal/log"
+	appconf "github.com/fsyyft-ai/eino-wizard/internal/pkg/conf"
+	applog "github.com/fsyyft-ai/eino-wizard/internal/pkg/log"
 	apptask "github.com/fsyyft-ai/eino-wizard/internal/task"
 	appquickstart "github.com/fsyyft-ai/eino-wizard/internal/task/quickstart"
 )
