@@ -61,7 +61,7 @@ func NewTodoAgent(logger kitlog.Logger, cfg *appconf.Config, agent apptodoagent.
 func (h *todoAgent) Run(ctx context.Context) error {
 	todoTools := h.agent.ToolInfos(ctx)
 	toolsNodeConfig := &compose.ToolsNodeConfig{
-		Tools: h.agent.BaseTools(),
+		Tools: h.agent.BaseTools(ctx),
 	}
 	chatModelConfig := &openai.ChatModelConfig{
 		BaseURL: appbailian.OpenAIURLBailian,
@@ -94,23 +94,27 @@ func (h *todoAgent) Run(ctx context.Context) error {
 		return err
 	}
 
-	msg := &schema.Message{
-		Role:    schema.User,
-		Content: "添加一个学习 Eino 的 TODO，同时搜索一下 fsyyft-ai/eino-wizard 的仓库地址",
+	taskMessages := []string{
+		"添加一个学习 Eino 的 TODO，同时搜索一下 fsyyft-ai/eino-wizard 的仓库地址",
+		"获取当前所有的 TODO 列表",
+		"搜索一下 fsyyft-ai/eino-wizard 的仓库地址",
 	}
-	if err := h.invoke(ctx, agent, msg); nil != err {
-		return err
-	}
-
-	msg = &schema.Message{
-		Role:    schema.User,
-		Content: "获取当前所有的 TODO 列表",
-	}
-	if err := h.invoke(ctx, agent, msg); nil != err {
-		return err
+	for _, task := range taskMessages {
+		if err := h.invokeMessage(ctx, agent, task); nil != err {
+			h.logger.Error(ctx, "invoke message failed", "task", task, "error", err)
+			return err
+		}
 	}
 
 	return nil
+}
+
+func (h *todoAgent) invokeMessage(ctx context.Context, agent compose.Runnable[[]*schema.Message, []*schema.Message], in string) error {
+	msg := &schema.Message{
+		Role:    schema.User,
+		Content: in,
+	}
+	return h.invoke(ctx, agent, msg)
 }
 
 func (h *todoAgent) invoke(ctx context.Context, agent compose.Runnable[[]*schema.Message, []*schema.Message], in *schema.Message) error {

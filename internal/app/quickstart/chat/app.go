@@ -73,6 +73,8 @@ func Run() {
 		cleanup()
 	} else {
 		// 启动 Web 服务器。
-		_ = task.Run(ctx)
+		if err := task.Run(ctx); nil != err {
+			fmt.Printf("运行失败：%v", err)
+		}
 	}
 }

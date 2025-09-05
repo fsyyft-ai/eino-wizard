@@ -6,6 +6,9 @@ log:
   output: logs/app.log
   # 日志级别，可选值：debug、info、warn、error。
   level: debug
+network:
+  proxyProtocol: socks5
+  proxyAddress: 10.254.157.11:1890
 # 服务器配置。
 server:
   # HTTP 服务器配置。

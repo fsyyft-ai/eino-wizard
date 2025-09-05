@@ -21,8 +21,9 @@ message Config {
   Log log = 1;
   // Server 配置应用程序的服务器设置。
   Server server = 2;
-  AI ai = 3;
-  QuickStart quickStart = 4;
+  Network network = 3;
+  AI ai = 4;
+  QuickStart quickStart = 5;
 }
 
 // Log 定义日志系统的详细配置参数。
@@ -48,6 +49,11 @@ message Server {
   }
   // 定义 HTTP 服务器的配置参数。
   HTTP http = 1;
+}
+
+message Network {
+  string proxyProtocol = 1;
+  string proxyAddress = 2;
 }
 
 message AI {

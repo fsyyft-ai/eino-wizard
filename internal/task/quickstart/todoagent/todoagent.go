@@ -6,10 +6,14 @@ package todoagent
 
 import (
 	"context"
+	"net"
+	"net/http"
 
+	"github.com/cloudwego/eino-ext/components/tool/duckduckgo/v2"
 	"github.com/cloudwego/eino/components/tool"
 	"github.com/cloudwego/eino/components/tool/utils"
 	"github.com/cloudwego/eino/schema"
+	"github.com/hashicorp/go.net/proxy"
 
 	kitlog "github.com/fsyyft-go/kit/log"
 
@@ -18,7 +22,7 @@ import (
 
 type (
 	TodoAgent interface {
-		BaseTools() []tool.BaseTool
+		BaseTools(ctx context.Context) []tool.BaseTool
 		ToolInfos(ctx context.Context) []*schema.ToolInfo
 	}
 
@@ -61,7 +65,7 @@ func NewTodoAgent(logger kitlog.Logger, cfg *appconf.Config) (TodoAgent, func(),
 
 func (a *todoAgent) ToolInfos(ctx context.Context) []*schema.ToolInfo {
 	if nil == a.toolInfos {
-		bts := a.BaseTools()
+		bts := a.BaseTools(ctx)
 		toolInfos := make([]*schema.ToolInfo, 0, len(bts))
 		for _, tool := range bts {
 			info, err := tool.Info(ctx)
@@ -75,7 +79,7 @@ func (a *todoAgent) ToolInfos(ctx context.Context) []*schema.ToolInfo {
 	return a.toolInfos
 }
 
-func (a *todoAgent) BaseTools() []tool.BaseTool {
+func (a *todoAgent) BaseTools(ctx context.Context) []tool.BaseTool {
 	if nil == a.tools {
 		a.tools = []tool.BaseTool{
 			a.getAddTodoTool(),
@@ -84,6 +88,7 @@ func (a *todoAgent) BaseTools() []tool.BaseTool {
 				cfg:    a.cfg,
 				logger: a.logger,
 			},
+			a.getSearchTool(ctx),
 		}
 	}
 	return a.tools
@@ -169,4 +174,32 @@ func (t *listTodoTool) InvokableRun(ctx context.Context, argumentsInJSON string,
 	t.logger.Infof("list todo tool run arguments: %s", argumentsInJSON)
 	// Mock 调用逻辑。
 	return `{"todos": [{"id": "1", "content": "在2024年12月10日之前完成Eino项目演示文稿的准备工作", "started_at": 1717401600, "deadline": 1717488000, "done": false}]}`, nil
+}
+
+// -----------------------------------------------------------------------------
+// 方式四：使用官方封装的工具。
+// -----------------------------------------------------------------------------
+func (a *todoAgent) getSearchTool(ctx context.Context) tool.InvokableTool {
+	// set socks5 proxy
+	dialer, derr := proxy.SOCKS5("tcp", "10.254.157.11:1890", nil, proxy.Direct)
+	if derr != nil {
+		a.logger.Errorf("init socks5 proxy failed, err=%v", derr)
+		return nil
+	}
+	searchTool, err := duckduckgo.NewTextSearchTool(ctx, &duckduckgo.Config{
+		Region: duckduckgo.RegionCN,
+		HTTPClient: &http.Client{
+			Transport: &http.Transport{
+				DialContext: func(c context.Context, network, addr string) (net.Conn, error) {
+					return dialer.Dial(network, addr)
+				},
+			},
+		},
+	})
+	if err != nil {
+		a.logger.Errorf("SearchTool failed, err=%v", err)
+		return nil
+	}
+	a.logger.Info("SearchTool init success")
+	return searchTool
 }
