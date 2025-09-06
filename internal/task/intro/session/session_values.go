@@ -30,6 +30,36 @@ import (
 	appprints "github.com/fsyyft-ai/eino-wizard/pkg/eino/adk/common/prints"
 )
 
+type (
+	ToolAInput struct {
+		Name string `json:"input" jsonschema:"description=用户姓名"`
+	}
+	ToolBInput struct {
+		Age int `json:"input" jsonschema:"description=用户年龄"`
+	}
+	ToolCInput struct {
+		Sex string `json:"input" jsonschema:"description=用户性别"`
+	}
+)
+
+func toolAFn(ctx context.Context, in *ToolAInput) (string, error) {
+	adk.AddSessionValue(ctx, "user-name", in.Name)
+	return in.Name, nil
+}
+
+func toolBFn(ctx context.Context, in *ToolBInput) (string, error) {
+	adk.AddSessionValue(ctx, "user-age", in.Age)
+	userName, _ := adk.GetSessionValue(ctx, "user-name")
+	return fmt.Sprintf("用户名: %v, 年龄: %v", userName, in.Age), nil
+}
+
+func toolCFn(ctx context.Context, in *ToolCInput) (string, error) {
+	adk.AddSessionValue(ctx, "user-sex", in.Sex)
+	userName, _ := adk.GetSessionValue(ctx, "user-name")
+	age, _ := adk.GetSessionValue(ctx, "user-age")
+	return fmt.Sprintf("用户名: %v, 年龄: %v，性别：%v", userName, age, in.Sex), nil
+}
+
 func main() {
 	ctx := context.Background()
 
@@ -43,15 +73,21 @@ func main() {
 		log.Fatalf("InferTool 失败, err: %v", err)
 	}
 
+	toolC, err := utils.InferTool("tool_c", "设置用户性别", toolCFn)
+	if err != nil {
+		log.Fatalf("InferTool 失败, err: %v", err)
+	}
+
 	a, err := adk.NewChatModelAgent(ctx, &adk.ChatModelAgentConfig{
 		Name:        "ChatModelAgent",
 		Description: "一个聊天模型代理",
-		Instruction: "你是一个聊天模型代理，先调用 tool_a，然后调用 tool_b；然后给出一个第一次见面时的交谈语。",
+		Instruction: "你是一个聊天模型代理，请按顺序调用 toolA toolB toolC；然后给出一个第一次见面时的交谈语。根据同的年龄、性别，说出合适的信息，让对方感受到亲切。",
 		ToolsConfig: adk.ToolsConfig{
 			ToolsNodeConfig: compose.ToolsNodeConfig{
 				Tools: []tool.BaseTool{
 					toolA,
 					toolB,
+					toolC,
 				},
 			},
 		},
@@ -65,7 +101,7 @@ func main() {
 		Agent: a,
 	})
 
-	iter := r.Query(ctx, "我叫老鬼，我 18 岁")
+	iter := r.Query(ctx, "我叫老鬼，我 18 岁，我是老男人")
 	for {
 		event, ok := iter.Next()
 		if !ok {
@@ -74,23 +110,4 @@ func main() {
 
 		appprints.Event(event)
 	}
-}
-
-type ToolAInput struct {
-	Name string `json:"input" jsonschema:"description=用户姓名"`
-}
-
-func toolAFn(ctx context.Context, in *ToolAInput) (string, error) {
-	adk.AddSessionValue(ctx, "user-name", in.Name)
-	return in.Name, nil
-}
-
-type ToolBInput struct {
-	Age int `json:"input" jsonschema:"description=用户年龄"`
-}
-
-func toolBFn(ctx context.Context, in *ToolBInput) (string, error) {
-	adk.AddSessionValue(ctx, "user-age", in.Age)
-	userName, _ := adk.GetSessionValue(ctx, "user-name")
-	return fmt.Sprintf("用户名: %v, 年龄: %v", userName, in.Age), nil
 }
