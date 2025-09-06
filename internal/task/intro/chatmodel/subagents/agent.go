@@ -33,9 +33,9 @@ func NewBookRecommendAgent() adk.Agent {
 
 	a, err := adk.NewChatModelAgent(ctx, &adk.ChatModelAgentConfig{
 		Name:        "BookRecommender",
-		Description: "An agent that can recommend books",
-		Instruction: `You are an expert book recommender.
-Based on the user's request, use the "search_book" tool to find relevant books. Finally, present the results to the user.`,
+		Description: "一个可以推荐图书的智能体",
+		Instruction: `你是一名资深的图书推荐专家。
+根据用户的请求，使用 "search_book" 工具来查找相关图书。最后，将结果呈现给用户。`,
 		Model: model.NewChatModel(context.Background()),
 		ToolsConfig: adk.ToolsConfig{
 			ToolsNodeConfig: compose.ToolsNodeConfig{
@@ -44,7 +44,7 @@ Based on the user's request, use the "search_book" tool to find relevant books. 
 		},
 	})
 	if err != nil {
-		log.Fatal(fmt.Errorf("failed to create chatmodel: %w", err))
+		log.Fatal(fmt.Errorf("创建 chatmodel 失败: %w", err))
 	}
 
 	return a

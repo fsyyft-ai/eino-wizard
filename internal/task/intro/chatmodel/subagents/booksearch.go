@@ -25,9 +25,9 @@ import (
 )
 
 type BookSearchInput struct {
-	Genre     string `json:"genre" jsonschema:"description=Preferred book genre,enum=fiction,enum=sci-fi,enum=mystery,enum=biography,enum=business"`
-	MaxPages  int    `json:"max_pages" jsonschema:"description=Maximum page length (0 for no limit)"`
-	MinRating int    `json:"min_rating" jsonschema:"description=Minimum user rating (0-5 scale)"`
+	Genre     string `json:"genre" jsonschema:"description=偏好的图书类型,enum=fiction,enum=sci-fi,enum=mystery,enum=biography,enum=business"`
+	MaxPages  int    `json:"max_pages" jsonschema:"description=最大页数（0 表示不限制）"`
+	MinRating int    `json:"min_rating" jsonschema:"description=最低用户评分（0-5）"`
 }
 
 type BookSearchOutput struct {
@@ -35,15 +35,15 @@ type BookSearchOutput struct {
 }
 
 func NewBookRecommender() tool.InvokableTool {
-	bookSearchTool, err := utils.InferTool("search_book", "Search books based on user preferences",
+	bookSearchTool, err := utils.InferTool("search_book", "根据用户偏好搜索图书",
 		func(ctx context.Context, input *BookSearchInput) (output *BookSearchOutput, err error) {
-			// search code
+			// 搜索代码
 			// ...
-			return &BookSearchOutput{Books: []string{"God's blessing on this wonderful world!"}}, nil
+			return &BookSearchOutput{Books: []string{"为美好的世界献上祝福！", "AI 开发指南"}}, nil
 		},
 	)
 	if err != nil {
-		log.Fatalf("failed to create search book tool: %v", err)
+		log.Fatalf("创建搜索图书工具失败: %v", err)
 	}
 	return bookSearchTool
 }

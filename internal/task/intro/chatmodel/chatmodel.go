@@ -35,11 +35,11 @@ func main() {
 	ctx := context.Background()
 	a := subagents.NewBookRecommendAgent()
 	runner := adk.NewRunner(ctx, adk.RunnerConfig{
-		EnableStreaming: true, // you can disable streaming here
+		EnableStreaming: true, // 你可以在这里关闭流式输出。
 		Agent:           a,
 		CheckPointStore: newInMemoryStore(),
 	})
-	iter := runner.Query(ctx, "recommend a book to me", adk.WithCheckPointID("1"))
+	iter := runner.Query(ctx, "给我推荐一本书", adk.WithCheckPointID("1"))
 	for {
 		event, ok := iter.Next()
 		if !ok {
@@ -53,7 +53,7 @@ func main() {
 	}
 
 	scanner := bufio.NewScanner(os.Stdin)
-	fmt.Print("\nyour input here: ")
+	fmt.Print("\n请输入内容: ")
 	scanner.Scan()
 	fmt.Println()
 	nInput := scanner.Text()
