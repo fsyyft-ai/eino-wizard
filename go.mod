@@ -7,7 +7,7 @@ require (
 	github.com/cloudwego/eino-ext/components/model/ollama v0.1.2
 	github.com/cloudwego/eino-ext/components/model/openai v0.0.0-20250905035413-86dbae6351d5
 	github.com/envoyproxy/protoc-gen-validate v1.2.1
-	github.com/fsyyft-go/kit v0.0.13
+	github.com/fsyyft-go/kit v0.0.14
 	github.com/go-kratos/kratos/v2 v2.8.4
 	github.com/google/wire v0.6.0
 	google.golang.org/genproto/googleapis/api v0.0.0-20250519155744-55703ea1f237

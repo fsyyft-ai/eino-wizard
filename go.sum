@@ -50,8 +50,8 @@ github.com/evanphx/json-patch v0.5.2/go.mod h1:ZWS5hhDbVDyob71nXKNL0+PWn6ToqBHMi
 github.com/fsnotify/fsnotify v1.4.7/go.mod h1:jwhsz4b93w/PPRr/qN1Yymfu8t87LnFCMoQvtojpjFo=
 github.com/fsnotify/fsnotify v1.7.0 h1:8JEhPFa5W2WU7YfeZzPNqzMP6Lwt7L2715Ggo0nosvA=
 github.com/fsnotify/fsnotify v1.7.0/go.mod h1:40Bi/Hjc2AVfZrqy+aj+yEI+/bRxZnMJyTJwOpGvigM=
-github.com/fsyyft-go/kit v0.0.13 h1:1tzunSWFsM1WHbD9us7SDC4/6krLsGg56IsjM0QPsmA=
-github.com/fsyyft-go/kit v0.0.13/go.mod h1:kBPzoeSo/jLFNO30PHer8OFPWyAzt6zd43J0fOqANWY=
+github.com/fsyyft-go/kit v0.0.14 h1:edMIOIMRkW1nBrM1+sisa47ipr6rAvWjNbcp6BQ0tTs=
+github.com/fsyyft-go/kit v0.0.14/go.mod h1:hgqjiIVkuUNX3yUS7PYkPalkAL7H0gIGpk7FO+/+84Q=
 github.com/gabriel-vasile/mimetype v1.4.3 h1:in2uUcidCuFcDKtdcBxlR0rJ1+fsokWf+uqxgUFjbI0=
 github.com/gabriel-vasile/mimetype v1.4.3/go.mod h1:d8uq/6HKRL6CGdk+aubisF/M5GcPfT7nKyLpA0lbSSk=
 github.com/getkin/kin-openapi v0.118.0 h1:z43njxPmJ7TaPpMSCQb7PN0dEYno4tyBPQcrFdHoLuM=
