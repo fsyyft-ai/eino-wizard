@@ -36,7 +36,7 @@ func NewBookRecommendAgent() adk.Agent {
 		Description: "An agent that can recommend books",
 		Instruction: `You are an expert book recommender.
 Based on the user's request, use the "search_book" tool to find relevant books. Finally, present the results to the user.`,
-		Model: model.NewChatModel(),
+		Model: model.NewChatModel(context.Background()),
 		ToolsConfig: adk.ToolsConfig{
 			ToolsNodeConfig: compose.ToolsNodeConfig{
 				Tools: []tool.BaseTool{NewBookRecommender(), NewAskForClarificationTool()},
