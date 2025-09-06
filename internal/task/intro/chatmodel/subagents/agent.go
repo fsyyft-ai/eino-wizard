@@ -25,7 +25,7 @@ import (
 	"github.com/cloudwego/eino/components/tool"
 	"github.com/cloudwego/eino/compose"
 
-	"github.com/fsyyft-ai/eino-wizard/pkg/eino/adk/common/model"
+	appmodel "github.com/fsyyft-ai/eino-wizard/pkg/eino/adk/common/model"
 )
 
 func NewBookRecommendAgent() adk.Agent {
@@ -36,7 +36,7 @@ func NewBookRecommendAgent() adk.Agent {
 		Description: "一个可以推荐图书的智能体",
 		Instruction: `你是一名资深的图书推荐专家。
 根据用户的请求，使用 "search_book" 工具来查找相关图书。最后，将结果呈现给用户。`,
-		Model: model.NewChatModel(context.Background()),
+		Model: appmodel.NewChatModel(context.Background()),
 		ToolsConfig: adk.ToolsConfig{
 			ToolsNodeConfig: compose.ToolsNodeConfig{
 				Tools: []tool.BaseTool{NewBookRecommender(), NewAskForClarificationTool()},

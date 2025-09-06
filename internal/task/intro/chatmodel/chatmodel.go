@@ -27,19 +27,25 @@ import (
 	"github.com/cloudwego/eino/components/tool"
 	"github.com/cloudwego/eino/compose"
 
-	"github.com/fsyyft-ai/eino-wizard/internal/task/intro/chatmodel/subagents"
-	"github.com/fsyyft-ai/eino-wizard/pkg/eino/adk/common/prints"
+	appsubagents "github.com/fsyyft-ai/eino-wizard/internal/task/intro/chatmodel/subagents"
+	appprints "github.com/fsyyft-ai/eino-wizard/pkg/eino/adk/common/prints"
 )
 
 func main() {
+	checkPointID := "1"
+	checkPointStore := newInMemoryStore()
+
 	ctx := context.Background()
-	a := subagents.NewBookRecommendAgent()
-	runner := adk.NewRunner(ctx, adk.RunnerConfig{
+	a := appsubagents.NewBookRecommendAgent()
+	runnerConfig := adk.RunnerConfig{
 		EnableStreaming: true, // 你可以在这里关闭流式输出。
 		Agent:           a,
-		CheckPointStore: newInMemoryStore(),
-	})
-	iter := runner.Query(ctx, "给我推荐一本书", adk.WithCheckPointID("1"))
+		CheckPointStore: checkPointStore,
+	}
+
+	runner := adk.NewRunner(ctx, runnerConfig)
+	// 设置了状态持久化 (Checkpoint)，Runner 捕获到这个带有 Interrupted Action 的 Event 时，会立即终止当前的执行流程。
+	iter := runner.Query(ctx, "给我推荐一本书", adk.WithCheckPointID(checkPointID))
 	for {
 		event, ok := iter.Next()
 		if !ok {
@@ -49,7 +55,7 @@ func main() {
 			log.Fatal(event.Err)
 		}
 
-		prints.Event(event)
+		appprints.Event(event)
 	}
 
 	scanner := bufio.NewScanner(os.Stdin)
@@ -58,7 +64,12 @@ func main() {
 	fmt.Println()
 	nInput := scanner.Text()
 
-	iter, err := runner.Resume(ctx, "1", adk.WithToolOptions([]tool.Option{subagents.WithNewInput(nInput)}))
+	toolOptions := []tool.Option{
+		appsubagents.WithNewInput(nInput),
+	}
+
+	// 运行中断，调用 Runner 的 Resume 接口传入中断时的 CheckPointID 可以恢复运行。
+	iter, err := runner.Resume(ctx, checkPointID, adk.WithToolOptions(toolOptions))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -72,7 +83,7 @@ func main() {
 			log.Fatal(event.Err)
 		}
 
-		prints.Event(event)
+		appprints.Event(event)
 	}
 }
 
