@@ -113,8 +113,8 @@ github.com/clbanning/mxj v1.8.4/go.mod h1:BVjHeAH+rl9rs6f+QIpeRl0tfu10SXn1pUSa5P
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
 github.com/cloudwego/base64x v0.1.6 h1:t11wG9AECkCDk5fMSoxmufanudBtJ+/HemLstXDLI2M=
 github.com/cloudwego/base64x v0.1.6/go.mod h1:OFcloc187FXDaYHvrNIjxSe8ncn0OOM8gEHfghB2IPU=
-github.com/cloudwego/eino v0.5.0 h1:hlNCfBeHGtD+UnLV3xF8pfjA7zxTHQywoUCQ7xeI7w8=
-github.com/cloudwego/eino v0.5.0/go.mod h1:S38tlNO4cNqFfGJKQSJZimxjzc9JDJKdf2eW3FEEfdc=
+github.com/cloudwego/eino v0.5.3 h1:Qnxk/4dbEG5AT3LKHymLiuVTw1G+TPRObsb7ypRPi4I=
+github.com/cloudwego/eino v0.5.3/go.mod h1:S38tlNO4cNqFfGJKQSJZimxjzc9JDJKdf2eW3FEEfdc=
 github.com/cloudwego/eino-ext/callbacks/cozeloop v0.1.4 h1:Cwm80+fMEAoY7uI9XUukDEV5J3Adb9HiXKmcXpXcDiM=
 github.com/cloudwego/eino-ext/callbacks/cozeloop v0.1.4/go.mod h1:xxjNsJeZwdIooEYTt6tjw/YJzkA6xPcxn1u/HvA5xc0=
 github.com/cloudwego/eino-ext/components/model/ark v0.1.27 h1:rn6pYdjNeYf5+PHK5hHXqercw8YVI+fHsAACsoneEw0=
@@ -125,8 +125,8 @@ github.com/cloudwego/eino-ext/components/model/openai v0.0.0-20250905035413-86db
 github.com/cloudwego/eino-ext/components/model/openai v0.0.0-20250905035413-86dbae6351d5/go.mod h1:QQhCuQxuBAVWvu/YAZBhs/RsR76mUigw59Tl0kh04C8=
 github.com/cloudwego/eino-ext/components/tool/duckduckgo/v2 v2.0.0-20250905035413-86dbae6351d5 h1:Cs+MnXBFQanmbQTDSaVSBEj+Q/o6hLpHY+CSeiHq4x4=
 github.com/cloudwego/eino-ext/components/tool/duckduckgo/v2 v2.0.0-20250905035413-86dbae6351d5/go.mod h1:QB9TkAu6OVDvQm5hEoK+VFVIbfDHO+ZQyUR2cPSo6jk=
-github.com/cloudwego/eino-ext/libs/acl/openai v0.0.0-20250826113018-8c6f6358d4bb h1:RMslzyijc3bi9EkqCulpS0hZupTl1y/wayR3+fVRN/c=
-github.com/cloudwego/eino-ext/libs/acl/openai v0.0.0-20250826113018-8c6f6358d4bb/go.mod h1:fHn/6OqPPY1iLLx9wzz+MEVT5Dl9gwuZte1oLEnCoYw=
+github.com/cloudwego/eino-ext/libs/acl/openai v0.0.0-20250905035413-86dbae6351d5 h1:DpUykVuoHidOisJA0uiDvbpuiVnze4rSRG/FEZ5gTTg=
+github.com/cloudwego/eino-ext/libs/acl/openai v0.0.0-20250905035413-86dbae6351d5/go.mod h1:fHn/6OqPPY1iLLx9wzz+MEVT5Dl9gwuZte1oLEnCoYw=
 github.com/cncf/udpa/go v0.0.0-20191209042840-269d4d468f6f/go.mod h1:M8M6+tZqaGXZJjfX53e64911xZQV5JYwmTeXPW+k8Sc=
 github.com/cncf/udpa/go v0.0.0-20201120205902-5459f2c99403/go.mod h1:WmhPx2Nbnhtbo57+VJT5O0JRkEi1Wbu0z5j0R8u5Hbk=
 github.com/cncf/xds/go v0.0.0-20210312221358-fbca930ec8ed/go.mod h1:eXthEFrGJvWHgFFCl3hGmgk+/aYT6PnTQLykKQRLhEs=

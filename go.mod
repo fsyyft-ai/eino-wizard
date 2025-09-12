@@ -3,7 +3,7 @@ module github.com/fsyyft-ai/eino-wizard
 go 1.25
 
 require (
-	github.com/cloudwego/eino v0.5.0
+	github.com/cloudwego/eino v0.5.3
 	github.com/cloudwego/eino-ext/callbacks/cozeloop v0.1.4
 	github.com/cloudwego/eino-ext/components/model/ark v0.1.27
 	github.com/cloudwego/eino-ext/components/model/ollama v0.1.2
@@ -31,7 +31,7 @@ require (
 	github.com/bytedance/sonic/loader v0.3.0 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cloudwego/base64x v0.1.6 // indirect
-	github.com/cloudwego/eino-ext/libs/acl/openai v0.0.0-20250826113018-8c6f6358d4bb // indirect
+	github.com/cloudwego/eino-ext/libs/acl/openai v0.0.0-20250905035413-86dbae6351d5 // indirect
 	github.com/corpix/uarand v0.2.0 // indirect
 	github.com/coze-dev/cozeloop-go/spec v0.1.4 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
